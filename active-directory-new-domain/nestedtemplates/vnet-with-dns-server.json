@@ -2,36 +2,36 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "virtualNetworkName": {
+    "hubVirtualNetworkName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the Virtual Network to Create"
+        "description": "The name of the Hub Virtual Network to Create"
       }
     },
-    "virtualNetworkAddressRange": {
+    "hubVirtualNetworkAddressRange": {
       "type": "string",
       "metadata": {
-        "description": "The address range of the new VNET in CIDR format"
+        "description": "The address range of the new Hub VNET in CIDR format"
       },
       "defaultValue": "10.0.0.0/16"
     },
-    "subnetName": {
+    "hubSubnetName": {
       "type": "string",
       "metadata": {
-        "description": "The name of the subnet created in the new VNET"
+        "description": "The name of the subnet created in the new Hub VNET"
       }
     },
-    "subnetRange": {
+    "hubSubnetRange": {
       "type": "string",
       "metadata": {
-        "description": "The address range of the subnet created in the new VNET"
+        "description": "The address range of the subnet created in the new Hub VNET"
       },
       "defaultValue": "10.0.0.0/24"
     },
     "DNSServerAddress": {
       "type": "array",
       "metadata": {
-        "description": "The DNS address(es) of the DNS Server(s) used by the VNET"
+        "description": "The DNS address(es) of the DNS Server(s) used by the Hub VNET"
       }
     },
     "location": {
@@ -45,13 +45,13 @@
   "resources": [
     {
       "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('virtualNetworkName')]",
+      "name": "[parameters('hubVirtualNetworkName')]",
       "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
-            "[parameters('virtualNetworkAddressRange')]"
+            "[parameters('hubVirtualNetworkAddressRange')]"
           ]
         },
         "dhcpOptions": {
@@ -59,9 +59,9 @@
         },
         "subnets": [
           {
-            "name": "[parameters('subnetName')]",
+            "name": "[parameters('hubSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('subnetRange')]"
+              "addressPrefix": "[parameters('hubSubnetRange')]"
             }
           }
         ]
