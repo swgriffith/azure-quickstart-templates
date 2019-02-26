@@ -95,7 +95,29 @@
             }
           }
         ]
-      }
+      },
+      "resources": [
+          {
+              "apiVersion": "2016-06-01",
+              "type": "virtualNetworkPeerings",
+              "name": "hubtospoke",
+              "location": "[parameters('location')]",
+              "dependsOn": [
+                  "[concat('Microsoft.Network/virtualNetworks/', parameters('hubVirtualNetworkName'))]",
+                  "[concat('Microsoft.Network/virtualNetworks/', parameters('spokeVirtualNetworkName'))]"
+              ],
+              "comments": "This is the peering from the hub vnet to the spoke vnet",
+              "properties": {
+                  "allowVirtualNetworkAccess": "true",
+                  "allowForwardedTraffic": "true",
+                  "allowGatewayTransit": "true",
+                  "useRemoteGateways": "false",
+                  "remoteVirtualNetwork": {
+                      "id": "[resourceId('Microsoft.Network/virtualNetworks',parameters('spokeVirtualNetworkName'))]"
+                  }
+              }
+          }
+      ] 
     },
     {
       "type": "Microsoft.Network/virtualNetworks",
@@ -116,7 +138,29 @@
             }
           }
         ]
-      }
+      },
+      "resources": [
+          {
+              "apiVersion": "2016-06-01",
+              "type": "virtualNetworkPeerings",
+              "name": "spoketohub",
+              "location": "[parameters('location')]",
+              "dependsOn": [
+                  "[concat('Microsoft.Network/virtualNetworks/', parameters('hubVirtualNetworkName'))]",
+                  "[concat('Microsoft.Network/virtualNetworks/', parameters('spokeVirtualNetworkName'))]"
+              ],
+              "comments": "This is the peering from the spoke vnet to the hub vnet",
+              "properties": {
+                  "allowVirtualNetworkAccess": "true",
+                  "allowForwardedTraffic": "true",
+                  "allowGatewayTransit": "false",
+                  "useRemoteGateways": "false",
+                  "remoteVirtualNetwork": {
+                      "id": "[resourceId('Microsoft.Network/virtualNetworks',parameters('hubVirtualNetworkName'))]"
+                  }
+              }
+          }
+      ] 
     } 
   ]
 }

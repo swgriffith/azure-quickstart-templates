@@ -311,17 +311,29 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "virtualNetworkName": {
+                    "hubVirtualNetworkName": {
                         "value": "[variables('hubVirtualNetworkName')]"
                     },
-                    "virtualNetworkAddressRange": {
+                    "hubVirtualNetworkAddressRange": {
                         "value": "[variables('hubVirtualNetworkAddressRange')]"
                     },
                     "hubSubnetName": {
                         "value": "[variables('hubSubnetName')]"
                     },
-                    "subnetRange": {
+                    "hubSubnetAddressPrefix": {
                         "value": "[variables('hubSubnetAddressPrefix')]"
+                    },                       
+                    "spokeVirtualNetworkName": {
+                        "value": "[variables('spokeVirtualNetworkName')]"
+                    },
+                    "spokeVirtualNetworkAddressRange": {
+                        "value": "[variables('spokeVirtualNetworkAddressRange')]"
+                    },
+                    "spokeSubnetName": {
+                        "value": "[variables('spokeSubnetName')]"
+                    },
+                    "spokeSubnetRange": {
+                        "value": "[variables('spokeSubnetRange')]"
                     },
                     "DNSServerAddress": {
                         "value": [
