@@ -6,7 +6,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of the Hub Virtual Network to Create"
-      }
+      },
+      "defaultValue": "hubVnet"
     },
     "hubVirtualNetworkAddressRange": {
       "type": "string",
@@ -19,7 +20,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of the subnet created in the new Hub VNET"
-      }
+      },
+      "defaultValue": "hub"
     },
     "hubSubnetAddressPrefix": {
       "type": "string",
@@ -33,7 +35,7 @@
       "metadata": {
         "description": "The name of the new Spoke VNET in CIDR format"
       },
-      "defaultValue": "spokevnet"
+      "defaultValue": "spokeVnet"
     },
     "spokeVirtualNetworkAddressRange": {
       "type": "string",
@@ -47,7 +49,7 @@
       "metadata": {
         "description": "The name of the subnet to Create in the new Spoke Virtual Network "
       },
-      "defaultValue": "default"
+      "defaultValue": "spoke"
     },
     "spokeSubnetRange": {
       "type": "string",

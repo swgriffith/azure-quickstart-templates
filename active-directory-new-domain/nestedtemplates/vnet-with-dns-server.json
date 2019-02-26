@@ -6,7 +6,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of the Hub Virtual Network to Create"
-      }
+      },
+      "defaultValue": "hubVnet"
     },
     "hubVirtualNetworkAddressRange": {
       "type": "string",
@@ -19,7 +20,8 @@
       "type": "string",
       "metadata": {
         "description": "The name of the subnet created in the new Hub VNET"
-      }
+      },
+      "defaultValue": "hub"
     },
     "hubSubnetRange": {
       "type": "string",
@@ -27,6 +29,34 @@
         "description": "The address range of the subnet created in the new Hub VNET"
       },
       "defaultValue": "10.0.0.0/24"
+    },
+    "spokeVirtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the new Spoke VNET in CIDR format"
+      },
+      "defaultValue": "spokeVnet"
+    },
+    "spokeVirtualNetworkAddressRange": {
+      "type": "string",
+      "metadata": {
+        "description": "The Address Range the subnet created in the new Spoke VNET"
+      },
+      "defaultValue": "10.1.0.0/16"
+    },
+    "spokeSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the subnet to Create in the new Spoke Virtual Network "
+      },
+      "defaultValue": "spoke"
+    },
+    "spokeSubnetRange": {
+      "type": "string",
+      "metadata": {
+        "description": "The address range of the subnet created in the new Spoke VNET"
+      },
+      "defaultValue": "10.1.0.0/24"
     },
     "DNSServerAddress": {
       "type": "array",
@@ -66,6 +96,27 @@
           }
         ]
       }
-    }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[parameters('spokeVirtualNetworkName')]",
+      "apiVersion": "2016-03-30",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('spokeVirtualNetworkAddressRange')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('spokeSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('spokeSubnetRange')]"
+            }
+          }
+        ]
+      }
+    } 
   ]
 }
