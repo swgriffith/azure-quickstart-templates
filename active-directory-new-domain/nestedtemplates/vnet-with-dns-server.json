@@ -91,7 +91,7 @@
           {
             "name": "[parameters('hubSubnetName')]",
             "properties": {
-              "addressPrefix": "[parameters('hubSubnetRange')]"
+              "addressPrefix": "[parameters('hubSubnetAddressPrefix')]"
             }
           }
         ]
