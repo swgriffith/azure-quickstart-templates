@@ -23,7 +23,7 @@
       },
       "defaultValue": "hub"
     },
-    "hubSubnetRange": {
+    "hubSubnetAddressPrefix": {
       "type": "string",
       "metadata": {
         "description": "The address range of the subnet created in the new Hub VNET"

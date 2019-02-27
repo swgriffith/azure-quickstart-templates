@@ -2,12 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "rgName":{
-            "type":"string",
-            "metadata": {
-                "description": "The name of the administrator account of the new VM and domain"
-            }            
-        },
         "adminUsername": {
             "type": "string",
             "metadata": {
@@ -75,44 +69,8 @@
     },
     "resources": [
         {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2018-05-01",
-            "location": "[parameters('location')]",
-            "name": "[parameters('rgName')]",
-            "properties": {}
-        },
-        {
-        "apiVersion": "2018-05-01",
-        "name": "applyLock",
-        "type": "Microsoft.Resources/deployments",
-        "resourceGroup": "[parameters('rgName')]",
-        "dependsOn": [
-            "[parameters('rgName')]"
-        ],
-        "properties": {
-            "mode": "Incremental",
-            "template": {
-            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-            "contentVersion": "1.0.0.0",
-            "parameters": {},
-            "resources": [
-                {
-                "name": "DontDelete",
-                "type": "Microsoft.Authorization/locks",
-                "apiVersion": "2017-04-01",
-                "properties": {
-                    "level": "CanNotDelete",
-                    "notes": "Prevent deletion of the resourceGroup"
-                }
-                }
-            ]
-            }
-         }
-        },
-        {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2016-03-30",
             "location": "[parameters('location')]",
             "properties": {
@@ -127,7 +85,6 @@
             "type": "Microsoft.Compute/availabilitySets",
             "location": "[parameters('location')]",
             "name": "[variables('adAvailabilitySetName')]",
-            "resourceGroup": "[parameters('rgName')]",
             "properties": {
                 "PlatformUpdateDomainCount": 20,
                 "PlatformFaultDomainCount": 2
@@ -139,7 +96,6 @@
         {
             "type": "Microsoft.Resources/deployments",
             "name": "VNet",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2016-02-01",
             "properties": {
                 "mode": "Incremental",
@@ -178,7 +134,6 @@
         {
             "type": "Microsoft.Network/loadBalancers",
             "name": "[variables('adLBName')]",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2016-03-30",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -219,7 +174,6 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('adNicName')]",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2016-03-30",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -254,7 +208,6 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('adVMName')]",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2017-03-30",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -314,7 +267,6 @@
                 {
                     "type": "extensions",
                     "name": "CreateADForest",
-                    "resourceGroup": "[parameters('rgName')]",
                     "apiVersion": "2017-03-30",
                     "location": "[parameters('location')]",
                     "dependsOn": [
@@ -348,7 +300,6 @@
         {
             "type": "Microsoft.Resources/deployments",
             "name": "UpdateVNetDNS",
-            "resourceGroup": "[parameters('rgName')]",
             "apiVersion": "2016-02-01",
             "dependsOn": [
                 "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('adVMName'), 'CreateADForest')]"
